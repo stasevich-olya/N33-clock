@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width">
+   <title>replit</title>
+   <link href="diplom.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+   <form class="wrapper">
+      <div>Выберите число клеток по горизонтали</div>
+      <input type='text' id="rows" value="16">
+      <div>Выберите число клеток по вертикали</div>
+      <input type='text' id="columns" value="9">
+      <input type=button value='Создать таблицу' onclick='buildTable()'>
+   </form>
+
+   <div>
+      <input id=audiofile type=file>
+
+      <div id="player">
+         <div id="audio_box"></div>
+         <div class="box">
+         </div>
+      </div>
+   </div>
+
+   <div class="table" id="table"></div>
+
+   <script src="diplom.js"></script>
+</body>
+
+</html>
