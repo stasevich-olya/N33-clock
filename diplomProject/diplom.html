@@ -8,8 +8,169 @@
    <link href="diplom.css" rel="stylesheet" type="text/css" />
 </head>
 
-<body>
+<body class="container-body">
+   <article class="menu">
+      <div class="logo"><img class="logo" src="Logo.svg"></div>
+      <div class="buttons">
+         <input class="button" type="button" value="Главная" onclick="switchToMainPage()">
+         <input class="button" type="button" value="О нас" onclick="switchToAboutPage()">
+         <input class="button button-blue" class="button" type="button" value="Анализ аудио"
+            onclick="switchToAnalysisAudio()">
+      </div>
+   </article>
 
+   <div id="IPage">
+   </div>
+
+   <script>
+      "use strict"
+      //#Main
+      //#About
+      //#Analysis
+
+      // отслеживаем изменение закладки в УРЛе
+      window.onhashchange = switchToStateFromURLHash;
+
+      // текущее состояние приложения
+      let SPAState = {};
+
+      // фотографии, которые можно просмотреть
+      var photos = {
+         1: { image: "Image.png" },
+      };
+
+      //упрощённая реализация РОУТИНГА - автоматического выполнения нужных
+      // частей кода в зависимости от формы URLа
+      function switchToStateFromURLHash() {
+         var URLHash = window.location.hash;
+         // убираем из закладки УРЛа решётку
+         // (по-хорошему надо ещё убирать восклицательный знак, если есть)
+         var stateStr = URLHash.substr(1);
+
+         if (stateStr != "") { // если закладка непустая, читаем из неё состояние и отображаем
+            let parts = stateStr.split("_")
+            SPAState = { pagename: parts[0] }; // первая часть закладки - номер страницы
+         }
+         else
+            SPAState = { pagename: 'Main' }; // иначе показываем главную страницу
+
+         console.log('Новое состояние приложения:');
+         console.log(SPAState);
+
+         // обновляем вариабельную часть страницы под текущее состояние
+         // это реализация View из MVC - отображение состояния модели в HTML-код
+         let pageHTML = "";
+         switch (SPAState.pagename) {
+            case 'Main':
+               pageHTML += "<img src='Image.png'></img>";
+               pageHTML += "<div class='text-main' id='text-main'>Learn how to make music that feels good.</div>";
+               break;
+            case 'About':
+               pageHTML += "<h3>О нас</h3>";
+               pageHTML += "<p>Мы круты!</p>";
+               break;
+            case 'Analysis':
+               pageHTML +=
+                  `<div class='input-container' id='input-container'>
+                  <div>создай свой плеер</div>
+                  <form class='wrapper'>
+               <div>Выберите число клеток по горизонтали</div>
+               <input type='text' id="rows" value="16">
+               <div>Выберите число клеток по вертикали</div>
+               <input type='text' id="columns" value="9">
+               <input type=button value='Создать таблицу' onclick='buildTable()'>
+               </form>
+            </div>`;
+               pageHTML += `
+            <div>
+              <input id=audiofile type=file>
+               <div id="player">
+                  <div id="audio_box"></div>
+                  <div class="box"></div>
+               </div>
+            </div>`;
+               pageHTML += "<table class='table' id='table'></table>";
+               break;
+         }
+
+         document.getElementById('IPage').innerHTML = pageHTML;
+
+         //добавляем стили элемментам??????????????????????????????????
+         let textMain = document.getElementById('text-main');
+         textMain.style.cssText = 'height: 250px; width: 675px; color: #000000; font-size: 56px; margin-top: 32px';
+         let inputContainer = document.getElementById('input-container');
+         inputContainer.style.cssText = 'display:flex';
+      }
+
+
+
+
+      // устанавливает в закладке УРЛа новое состояние приложения
+      // и затем устанавливает+отображает это состояние
+      function switchToState(newState) {
+         // устанавливаем закладку УРЛа
+         let stateStr = newState.pagename;
+         location.hash = stateStr;
+
+         // АВТОМАТИЧЕСКИ вызовется switchToStateFromURLHash()
+         // т.к. закладка УРЛа изменилась (ЕСЛИ она действительно изменилась)
+      }
+
+      function switchToMainPage() {
+         switchToState({ pagename: 'Main' });
+      }
+
+      function switchToAnalysisAudio() {
+         switchToState({ pagename: 'Analysis' });
+      }
+
+      function switchToAboutPage() {
+         switchToState({ pagename: 'About' });
+      }
+
+      // переключаемся в состояние, которое сейчас прописано в закладке УРЛ
+      switchToStateFromURLHash();
+
+   </script>
+
+   <article class="footer">
+      <div class="footer-container">
+         <div class="column-left">
+            <img class="logo-footer" src="Logo_footer.svg">
+            <div>Спасибо что посетили сайт</div>
+            <div class="phone">+48722239376</div>
+         </div>
+         <div class="column-right">
+            <ul class="column-first">
+               <li class="li-title">Product</li>
+               <li>Download </li>
+               <li>Pricing</li>
+               <li>Locations</li>
+            </ul>
+            <ul class="column-second">
+               <li class="li-title">Engage</li>
+               <li>LaslesVPN</li>
+               <li>FAQ</li>
+               <li>Tutorials</li>
+            </ul>
+            <ul class="column-third">
+               <li class="li-title">Earn Money</li>
+               <li>Affiliate</li>
+               <li>Become Partner</li>
+            </ul>
+         </div>
+      </div>
+   </article>
+</body>
+
+</html>
+
+
+
+
+
+
+<!--<article>
    <form class="wrapper">
       <div>Выберите число клеток по горизонтали</div>
       <input type='text' id="rows" value="16">
@@ -26,11 +187,22 @@
          <div class="box">
          </div>
       </div>
-   </div>
 
-   <div class="table" id="table"></div>
 
-   <script src="diplom.js"></script>
-</body>
+      
+      <section class="tape">
 
-</html>
+         <audio src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/858/outfoxing.mp3" crossorigin="anonymous"></audio>
+
+         -->
+<!-- 			type="audio/mpeg" -->
+<!--
+         <button data-playing="false" class="tape-controls-play" role="switch" aria-checked="false">
+            <span>Play/Pause</span>
+         </button>
+      </section>
+   
+
+
+</div> 
+ -->
