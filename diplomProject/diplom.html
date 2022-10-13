@@ -9,79 +9,87 @@
 </head>
 
 <body class="container-body">
-   <article class="menu">
-      <div class="logo"><img class="logo" src="Logo.svg"></div>
-      <div class="buttons">
-         <input class="button" type="button" value="Главная" onclick="switchToMainPage()">
-         <input class="button" type="button" value="О нас" onclick="switchToAboutPage()">
-         <input class="button button-blue" class="button" type="button" value="Анализ аудио"
-            onclick="switchToAnalysisAudio()">
-      </div>
-   </article>
+    <div class="container-body">
+      <article class="menu">
+         <div class="logo"><img class="logo" src="Logo.svg"></div>
+         <div class="buttons">
+            <input class="button" type="button" value="Главная" onclick="switchToMainPage()">
+            <input class="button" type="button" value="О нас" onclick="switchToAboutPage()">
+            <input class="button button-blue" class="button" type="button" value="Анализ аудио"
+               onclick="switchToAnalysisAudio()">
+         </div>
+      </article>
 
-   <div id="IPage">
-   </div>
+      <div class="main">
+         <div id="IPage">
+         </div>
 
-   <script>
-      "use strict"
-      //#Main
-      //#About
-      //#Analysis
+         <script>
+            "use strict"
+            //#Main
+            //#About
+            //#Analysis
 
-      // отслеживаем изменение закладки в УРЛе
-      window.onhashchange = switchToStateFromURLHash;
+            // отслеживаем изменение закладки в УРЛе
+            window.onhashchange = switchToStateFromURLHash;
 
-      // текущее состояние приложения
-      let SPAState = {};
+            // текущее состояние приложения
+            let SPAState = {};
 
-      // фотографии, которые можно просмотреть
-      var photos = {
-         1: { image: "Image.png" },
-      };
+            // фотографии, которые можно просмотреть
+            var photos = {
+               1: { image: "Image.png" },
+            };
 
-      //упрощённая реализация РОУТИНГА - автоматического выполнения нужных
-      // частей кода в зависимости от формы URLа
-      function switchToStateFromURLHash() {
-         var URLHash = window.location.hash;
-         // убираем из закладки УРЛа решётку
-         // (по-хорошему надо ещё убирать восклицательный знак, если есть)
-         var stateStr = URLHash.substr(1);
+            //упрощённая реализация РОУТИНГА - автоматического выполнения нужных
+            // частей кода в зависимости от формы URLа
+            function switchToStateFromURLHash() {
+               var URLHash = window.location.hash;
+               // убираем из закладки УРЛа решётку
+               // (по-хорошему надо ещё убирать восклицательный знак, если есть)
+               var stateStr = URLHash.substr(1);
 
-         if (stateStr != "") { // если закладка непустая, читаем из неё состояние и отображаем
-            let parts = stateStr.split("_")
-            SPAState = { pagename: parts[0] }; // первая часть закладки - номер страницы
-         }
-         else
-            SPAState = { pagename: 'Main' }; // иначе показываем главную страницу
+               if (stateStr != "") { // если закладка непустая, читаем из неё состояние и отображаем
+                  let parts = stateStr.split("_")
+                  SPAState = { pagename: parts[0] }; // первая часть закладки - номер страницы
+               }
+               else
+                  SPAState = { pagename: 'Main' }; // иначе показываем главную страницу
 
-         console.log('Новое состояние приложения:');
-         console.log(SPAState);
+               console.log('Новое состояние приложения:');
+               console.log(SPAState);
 
-         // обновляем вариабельную часть страницы под текущее состояние
-         // это реализация View из MVC - отображение состояния модели в HTML-код
-         let pageHTML = "";
-         switch (SPAState.pagename) {
-            case 'Main':
-               pageHTML += "<img src='Image.png'></img>";
-               pageHTML += "<div class='text-main' id='text-main'>Learn how to make music that feels good.</div>";
-               break;
-            case 'About':
-               pageHTML += "<h3>О нас</h3>";
-               pageHTML += "<p>Мы круты!</p>";
-               break;
-            case 'Analysis':
-               pageHTML +=
-                  `<div class='input-container' id='input-container'>
-                  <div>создай свой плеер</div>
-                  <form class='wrapper'>
-               <div>Выберите число клеток по горизонтали</div>
-               <input type='text' id="rows" value="16">
-               <div>Выберите число клеток по вертикали</div>
-               <input type='text' id="columns" value="9">
-               <input type=button value='Создать таблицу' onclick='buildTable()'>
+               // обновляем вариабельную часть страницы под текущее состояние
+               // это реализация View из MVC - отображение состояния модели в HTML-код
+               let pageHTML = "";
+               switch (SPAState.pagename) {
+                  case 'Main':
+                     pageHTML += "<img class='main-img' src='Image.png'></img>";
+                     pageHTML += "<div class='text-main' id='text-main'>Learn how to make music that feels good.</div>";
+                     break;
+                  case 'About':
+                     pageHTML += "<h3>О нас</h3>";
+                     pageHTML += "<p>Мы круты!</p>";
+                     break;
+                  case 'Analysis':
+                     pageHTML +=
+                        `<div class='input-container' id='input-container'>
+                  <div class='input-text'>создай свой плеер</div>
+                  <form class='input-wrapper'>
+               <div class='wrapper-input' >      
+               <div class='wrapper-input-text'>Выберите число клеток по горизонтали</div>
+               <input class='wrapper-input-input' type='text' id="rows" value="16">
+               </div>
+               <div class='wrapper-input' >
+               <div class='wrapper-input-text'>Выберите число клеток по вертикали</div>
+               <input class='wrapper-input-input' type='text' id="columns" value="9">
+               </div>
+               <input class='input-button' type=button value='Создать таблицу' onclick='buildTable()'>
+               <input class='input-button' type=button value='Очистить таблицу' onclick='deleteTable()'>
                </form>
             </div>`;
-               pageHTML += `
+                     pageHTML += `
+                    
             <div>
               <input id=audiofile type=file>
                <div id="player">
@@ -89,78 +97,185 @@
                   <div class="box"></div>
                </div>
             </div>`;
-               pageHTML += "<table class='table' id='table'></table>";
-               break;
-         }
+                     pageHTML += "<table class='table' id='table'></table>";
 
-         document.getElementById('IPage').innerHTML = pageHTML;
+                     break;
+               }
 
-         //добавляем стили элемментам??????????????????????????????????
-         let textMain = document.getElementById('text-main');
-         textMain.style.cssText = 'height: 250px; width: 675px; color: #000000; font-size: 56px; margin-top: 32px';
-         let inputContainer = document.getElementById('input-container');
-         inputContainer.style.cssText = 'display:flex';
-      }
+               document.getElementById('IPage').innerHTML = pageHTML;
+            }
+
+            //-----------------------------------------------------------------------------------------//
+            //создаем таблицу
+            function buildTable() {
+               deleteTable();
+               let table = document.getElementById("table");
+               let rowsNumber = document.getElementById("rows").value; //16
+               let columnsNumber = document.getElementById("columns").value;  //9
+               var sumCells = Number(rowsNumber) * Number(columnsNumber); //16*9=144
+               table.classList.add('show');
+               table.style.cssText = "display:table; \ width:100%;  \ border-collapse:collapse; \ box-sizing: border-box; border: solid #FF7B7B";
+
+               for (let i = 0; i < columnsNumber; i++) {
+                  let row = document.createElement("tr");
+                  row.style.cssText = "display:table-row; \ width:100%;";
+                  table.appendChild(row);
+                  for (let j = 0; j < rowsNumber; j++) {
+                     let cell = document.createElement("td");
+                     cell.style.cssText = "display:table-cell; \ height:20px; \ border:1px solid #FF7B7B;";
+                     row.appendChild(cell)
+                  }
+               }
+
+               //аудиовизуализация
+               var audio,
+                  analyser,
+                  audioContext,
+                  sourceNode,
+                  stream;
+
+               var audioInput = document.getElementById('audiofile');
 
 
+               // choose file
+               audioInput.addEventListener('change', function (event) {
+                  stream = URL.createObjectURL(event.target.files[0]);
+                  audio = new Audio();
+                  audio.src = stream;
+                  audio.controls = true;
+                  audio.autoplay = true;
+                  setup();
+               });
 
+               //создаем анализатор
+               function setup() {
+                  audio.addEventListener('canplay', function () {
+                     document.body.className += 'loaded';
+                     document.getElementById('audio_box').appendChild(audio);
+                     var AudioContext = window.AudioContext || window.webkitAudioContext;
+                     audioContext = new AudioContext();
+                     analyser = (analyser || audioContext.createAnalyser());
 
-      // устанавливает в закладке УРЛа новое состояние приложения
-      // и затем устанавливает+отображает это состояние
-      function switchToState(newState) {
-         // устанавливаем закладку УРЛа
-         let stateStr = newState.pagename;
-         location.hash = stateStr;
+                     //громкость!!
+                     sourceNode = audioContext.createMediaElementSource(audio);
+                     sourceNode.connect(analyser);
+                     sourceNode.connect(audioContext.destination);
 
-         // АВТОМАТИЧЕСКИ вызовется switchToStateFromURLHash()
-         // т.к. закладка УРЛа изменилась (ЕСЛИ она действительно изменилась)
-      }
+                     audio.play();
+                     update();
+                  });
+               }
 
-      function switchToMainPage() {
-         switchToState({ pagename: 'Main' });
-      }
+               function update() {
+                  window.requestAnimationFrame(update);
 
-      function switchToAnalysisAudio() {
-         switchToState({ pagename: 'Analysis' });
-      }
+                  analyser.fftSize = 256;
 
-      function switchToAboutPage() {
-         switchToState({ pagename: 'About' });
-      }
+                  //создаем массив для хранения данных
+                  var freqArray = new Uint8Array(analyser.frequencyBinCount);
+                  //получаем данные о частоте из массива
+                  analyser.getByteFrequencyData(freqArray);
+                  console.log(freqArray);
 
-      // переключаемся в состояние, которое сейчас прописано в закладке УРЛ
-      switchToStateFromURLHash();
+                  //создаем новый массив!!!!!!!!!!
+                  //let numberCells = 144;
+                  let newArray = {};
+                  function arrCreate() {
 
-   </script>
+                     for (let i = 0; i <= freqArray.length; i++) {  //128 freqArray.length
 
-   <article class="footer">
-      <div class="footer-container">
-         <div class="column-left">
-            <img class="logo-footer" src="Logo_footer.svg">
-            <div>Спасибо что посетили сайт</div>
-            <div class="phone">+48722239376</div>
-         </div>
-         <div class="column-right">
-            <ul class="column-first">
-               <li class="li-title">Product</li>
-               <li>Download </li>
-               <li>Pricing</li>
-               <li>Locations</li>
-            </ul>
-            <ul class="column-second">
-               <li class="li-title">Engage</li>
-               <li>LaslesVPN</li>
-               <li>FAQ</li>
-               <li>Tutorials</li>
-            </ul>
-            <ul class="column-third">
-               <li class="li-title">Earn Money</li>
-               <li>Affiliate</li>
-               <li>Become Partner</li>
-            </ul>
-         </div>
+                        let value = freqArray[i];
+                        newArray[i] = value;  //значения до 127 
+                     };
+                     if (sumCells > freqArray.length) {
+                        let diff = sumCells - freqArray.length; //16 элементов разницы
+                        for (let u = 0; u <= diff; u++) {
+                           let value1 = freqArray[u];
+                           newArray[u + freqArray.length] = value1;
+                        }
+                     }
+                     console.log(newArray);
+                  }
+                  arrCreate(freqArray, sumCells);
+
+                  //перебираем цвет
+                  let cell = document.getElementsByTagName('td');
+                  let newArrayLength = Object.keys(newArray).length;
+
+                  function colorCreate(newArray, cell) {
+                     for (let i = 0; i <= newArrayLength; i++) {
+                        let valueColor = newArray[i];
+                        cell[i].style.backgroundColor = `rgb(${valueColor},0,0)`;
+                     }
+                  }
+                  colorCreate(newArray, cell);
+               }
+
+            };
+
+            //удаляем таблицу
+            function deleteTable() {
+               table.innerHTML = '';
+            }
+            //-----------------------------------------------------------------------------------------//
+            // устанавливает в закладке УРЛа новое состояние приложения
+            // и затем устанавливает+отображает это состояние
+            function switchToState(newState) {
+               // устанавливаем закладку УРЛа
+               let stateStr = newState.pagename;
+               location.hash = stateStr;
+
+               // АВТОМАТИЧЕСКИ вызовется switchToStateFromURLHash()
+               // т.к. закладка УРЛа изменилась (ЕСЛИ она действительно изменилась)
+            }
+
+            function switchToMainPage() {
+               switchToState({ pagename: 'Main' });
+            }
+
+            function switchToAnalysisAudio() {
+               switchToState({ pagename: 'Analysis' });
+            }
+
+            function switchToAboutPage() {
+               switchToState({ pagename: 'About' });
+            }
+
+            // переключаемся в состояние, которое сейчас прописано в закладке УРЛ
+            switchToStateFromURLHash();
+
+         </script>
+
       </div>
-   </article>
+      <article class="footer">
+         <div class="footer-container">
+            <div class="column-left">
+               <img class="logo-footer" src="Logo_footer.svg">
+               <div>Спасибо что посетили сайт</div>
+               <div class="phone">+48722239376</div>
+            </div>
+            <div class="column-right">
+               <ul class="column-first">
+                  <li class="li-title">Product</li>
+                  <li>Download </li>
+                  <li>Pricing</li>
+                  <li>Locations</li>
+               </ul>
+               <ul class="column-second">
+                  <li class="li-title">Engage</li>
+                  <li>LaslesVPN</li>
+                  <li>FAQ</li>
+                  <li>Tutorials</li>
+               </ul>
+               <ul class="column-third">
+                  <li class="li-title">Earn Money</li>
+                  <li>Affiliate</li>
+                  <li>Become Partner</li>
+               </ul>
+            </div>
+         </div>
+      </article>
+   </div>
 </body>
 
 </html>
