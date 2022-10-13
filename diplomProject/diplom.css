@@ -1,66 +1,192 @@
+/*------------------------------------------------*/
+@import url(https://fonts.googleapis.com/css?family=Inter:100,200,300,regular,500,600,700,800,900);
+
+/*статичные элементы*/
+html,
+body {
+  height: 100%;
+}
+
 .container-body {
-   max-width: 1440px;
-   margin: 17px 42px;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  max-width: 1440px;
+  min-width: 320px;
+  padding-right: 40px;
+  padding-left: 40px;
+}
+
+.main {
+  flex: 1 1 auto;
 }
 
 .menu {
-   display: flex;
-   justify-content: space-between;
-   align-items: flex-end;
-   margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 20px;
 }
 
 .button {
-   margin-left: 14px;
-   background-color: #FFFFFF;
-   color: #6950FF;
-   border: 2px solid #6950FF;
-   border-radius: 8px;
-   width: 84px;
-   height: 42px;
-   font-family: inter;
-   font-size: 16px;
-   line-height: 19px;
+  margin-left: 14px;
+  background-color: #E2DDFF;
+  color: #6950FF;
+  border: none;
+  border-radius: 8px;
+  width: 84px;
+  height: 42px;
+  font-family: inter;
+  font-size: 16px;
+  line-height: 19px;
+}
+
+.button:hover {
+  background-color: #6950FF;
+  color: #FFFFFF;
+  transition: 0, 5s;
 }
 
 .button-blue {
-   background-color: #6950FF;
-   color: #FFFFFF;
-   width: 147px;
-   height: 42px;
+  background-color: #6950FF;
+  border: 2px solid #6950FF;
+  color: #FFFFFF;
+  width: 147px;
+  height: 42px;
+}
+
+.button-blue:hover {
+  background-color: #FFFFFF;
+  color: #6950FF;
+  transition: 0, 5s;
 }
 
 .footer-container {
-   display: grid;
-   grid-template-columns: 1fr 1fr;
-   background-color: #1E2B35;
-   color: #FFFFFF;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background-color: #1E2B35;
+  color: #FFFFFF;
 }
 
+/*-----------------------------------------------------*/
+/*main page*/
+
+.main-img {
+  width: 100%;
+}
+
+.text-main {
+  height: 250px;
+  width: 675px;
+  color: #000000;
+  font-size: 56px;
+  margin-top: 32px;
+  padding-left: 42px;
+  font-family: Inter;
+  font-style: bold;
+}
+
+/*-----------------------------------------------------*/
+/*footer*/
 .column-left {
-   margin-top: 32px;
-   margin-left: 42px;
-   margin-bottom: 32px;
+  margin-top: 32px;
+  margin-left: 42px;
+  margin-bottom: 32px;
 }
 
 .logo-footer {
-   margin-bottom: 42px;
+  margin-bottom: 42px;
 }
 
 .column-right {
-   display: flex;
-   margin-top: 32px;
+  display: flex;
+  margin-top: 32px;
 }
 
 li {
-   list-style-type: none;
-   margin-bottom: 15px;
+  list-style-type: none;
+  margin-bottom: 15px;
 }
 
 .column-first {
-   margin-right: 156px;
+  margin-right: 156px;
 }
 
 .column-second {
-   margin-right: 141px;
+  margin-right: 121px;
+}
+
+/*----------------------------------------------------*/
+/*Analysis*/
+
+.input-container {
+  display: flex;
+  margin-top: 52px;
+  margin-bottom: 30px;
+  justify-content: space-between;
+
+}
+
+.input-text {
+  font-family: Inter;
+  font-size: 56px;
+  padding-right: 242px;
+}
+
+.wrapper-input {
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: 34px;
+  align-items: center;
+}
+
+.wrapper-input-text {
+  font-size: 20px;
+  line-height: 24px;
+  padding-right: 42px;
+  width: 350px;
+
+}
+
+.wrapper-input-input {
+  width: 206px;
+  height: 56px;
+  background-color: #ECEEF8;
+  border: solid 1px #ECEEF8;
+  padding-left: 20px;
+  border-radius: 8px;
+}
+
+.input-button {
+  background-color: #FFFFFF;
+  color: #6950FF;
+  border: 2px solid #6950FF;
+  border-radius: 8px;
+  width: 184px;
+  height: 42px;
+  font-family: inter;
+  font-size: 16px;
+  line-height: 19px;
+  margin-right: 20px;
+}
+
+.input-button:hover {
+  background-color: #6950FF;
+  color: #FFFFFF;
+  transition: 0, 5s;
+}
+
+.pause {
+  display: none;
+}
+
+.table {
+  display: none;
+
+}
+
+.table.show {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 60px;
 }
